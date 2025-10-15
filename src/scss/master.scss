@@ -1,0 +1,259 @@
+
+// 全局变量 + 基本排版 + 全站通用样式
+// $serif, $sans, $entypo：存储字体名称集合，便于后面复用
+// $formFont/$titleFont/$textFont：把上面的字体变量映射为语义化名字（表单、标题、正文用哪个字体）
+
+// $serif : 'Quattrocento', serif;
+// $sans:  helvetica, arial, sans-serif;
+// $entypo : "EntypoRegular";
+// 更改
+$serif : 'Poppins', sans-serif;
+$sans: 'Inter', sans-serif;
+
+
+$formFont : $sans;
+// $titleFont : $serif;
+// $textFont : $serif;
+$titleFont: $sans;
+$textFont: $sans;
+
+// $widgetBorderCol：控件边框颜色（#222）
+// $inputBg：输入框背景（半透明白），便于在深色背景上显示
+// $menuH：菜单高度（45px），后面用在 label 等。
+//$widgetBorderCol : #000000;
+$widgetBorderCol: rgba(255, 255, 255, 0.1);
+$inputBorderCol : #333;
+//$inputBg : rgba(255, 255, 255, 0.1);
+$inputBg: rgba(255, 255, 255, 0.15);
+$calendarBg : rgba(25, 25, 25, 0.95);
+$labelBg : rgba(25, 25, 25, 0.7);
+//$txCol : #aaa;  
+$txCol: #e0e0e0;
+
+$prelaodCol : #444;
+$labelLineCol : #333;
+
+$menuH : 45px;
+
+
+// @mixin unselectable(){
+// 	cursor: default !important;
+// 	-moz-user-select: -moz-none;
+// 	-khtml-user-select: none;
+// 	-webkit-user-select: none;
+// 	-ms-user-select: none;
+// 	user-select: none;
+// 	pointer-events:none;
+// }
+
+// 这是一个带有参数的“防选中”混合宏
+@mixin unselectable($clickable: false){
+	// 保持防选中特性 (跨浏览器兼容性)
+	cursor: default !important;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	
+	// 根据参数控制 pointer-events
+	@if $clickable {
+		pointer-events: auto; // 启用点击（允许 hover）
+	} @else {
+		pointer-events: none; // 禁用点击
+	}
+}
+
+
+
+body#CosmoTrail {
+	opacity: 1;
+	margin:0;
+	padding:0;
+	// font-family:$formFont;
+  font-family:Roboto;
+	font-size:11px;
+	color: $txCol;
+	background:linear-gradient(#000000, #000000);
+  //background: radial-gradient(circle at center, #435e95, #000000);
+	overflow:hidden;
+	 -webkit-font-smoothing: antialiased;
+	height: 100vh;
+
+	h1, h2{
+		font-family:$titleFont;
+		font-weight:normal;
+	}
+	
+	a{
+		color:#fff;
+	}
+
+	.helpContent{
+
+		position:absolute;
+		top:0;
+		left:0;
+		z-index:150;
+		// background: rgba(0, 0, 0, 0.8);
+    background: rgba(20, 20, 20, 0.85); backdrop-filter: blur(10px);
+		width : 60%;
+		min-width:400px;
+		max-height: 80%;
+		padding: 0;
+		border-bottom: 1px #222 solid;
+		font-family:$textFont;
+		font-size: 16px;
+		letter-spacing: 0.5px;
+		line-height: 1.8em;
+		color:#aaa;
+		text-align:justify;
+		overflow-y:scroll;
+		opacity: 0;
+    visibility: hidden; // <--- 关键修改：用 visibility 替代 display
+  
+    /* --- 这里是第一个关键修改：添加过渡效果和初始下沉 --- */
+    transition: opacity 0.4s ease, transform 0.3s ease;
+    transform: translateY(10px);
+    /* ------------------------------------------------ */
+	
+    // display:none;
+		padding: 80px 20%;
+	
+    /* --- 这里是第二个关键修改：添加可见状态的嵌套样式 --- */
+    &.visible {
+      // display: block; // 必须先改为 block 才能显示
+      visibility: visible; // <--- 关键修改：设为可见
+      opacity: 1;
+      transform: translateY(0); // 弹窗回到原位
+    }
+    /* ------------------------------------------------ */
+
+		h2{
+			color:#fff;
+			text-shadow: 0 0 2px #555;
+		}
+	
+	}
+	
+	.close {
+		cursor:pointer;
+		position:absolute;
+		top: 10px;
+		right:10px;
+		border:0;
+		font-size:22px;
+		transition-duration: 0.5s;
+		// &:hover{
+		// 	color:#fff;
+		// }
+    	/* --- 这里是添加的悬浮特效 --- */
+    &:hover {
+      color:#fff; // 鼠标悬停时，颜色变为白色 (或您指定的高亮色)
+      transform: rotate(90deg); // 鼠标悬停时，图标旋转 90 度
+    }
+	    /* --------------------------- */
+	
+		&.inflow{
+			font-size:inherit;
+			position:auto;
+			right: auto;
+			top: auto;
+		}
+	
+	}
+	
+}
+
+// #credits{
+// 	position:absolute;
+// 	bottom: 10px;
+// 	right: 10px;
+// 	cursor:pointer;
+// }
+
+.planetLabel{
+	@include unselectable();
+	position:absolute;
+	top:0;
+	left:0;
+	color:#fff;
+	//background:$labelBg;
+  background: rgba(30, 30, 30, 0.5);
+	backdrop-filter: blur(5px);
+	border-radius: 6px;
+	padding:3px;
+	font-size:9px;
+	left: 24px;
+	white-space: nowrap;
+	z-index:50;
+}
+
+.eventLabel{
+	@include unselectable();
+	position:absolute;
+	color:#fff;
+	width:2px;
+	height:2px;
+	border-radius: 1px;
+	margin-left:-1px;
+	margin-top:-1px;
+	background:#fff;
+	//display:none !important;
+
+	.line{
+		transform-origin: 0 0;
+		width:1px;
+		height:100px;
+		border-left:1px $labelLineCol solid;
+		position:absolute;
+		left:1px;
+	}
+
+	.tx{
+		position:absolute;
+		background:$labelBg;
+		font-size: 9px;
+		padding:3px;
+		white-space: nowrap;
+		border-bottom:1px $labelLineCol solid;
+		text-align:center;
+	}
+}
+
+.planetSpot {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
+        margin-left: -10px;
+        border: none;
+        background: transparent;
+        pointer-events: none;
+}
+
+.debug{
+	position:absolute;
+	bottom:10px;
+	right:10px;
+	color:#fff;
+	font-size:10px;
+	z-index:9999;
+}
+
+#stats { 
+	position: absolute;
+	bottom:0;
+	left: 0;
+	#fps {
+		background: transparent !important;
+		#fpsText { color: #aaa !important; }
+		#fpsGraph { display: none; }
+	}
+}
+
+
+@import './components/preloader';
+@import './components/gui';

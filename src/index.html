@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <meta name="author" content="Martin Vézina, La Grange"> -->
+        <title>CosmoTrail: Planetary Data Stream</title>
+        
+        <style>
+            body { opacity: 0; }
+        </style>
+        
+        <meta property="og:title" content="CosmoTrail - Solar System Simulator" /> 
+        <meta property="og:description" content="See the Solar System in your browser with CosmoTrail..." />
+        
+        <link href='https://fonts.googleapis.com/css?family=Quattrocento' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+        
+        </head>
+    
+    <body id="CosmoTrail">
+        
+        <nav id="gui" role="navigation">
+            
+            <div id="consoleFrame">
+                
+                <div class="module-header primary-title">
+                    <h1 class="console-title">CosmoTrail - DATA CONSOLE</h1>
+                    <div class="signal-light active" aria-label="System Operational Status"></div>
+                </div>
+
+                <header id="status" role="region" aria-label="Simulation Status and Playback">
+                    <div id="startCont" class="inputContainer" aria-label="Simulation Playback Control"></div>
+                    <div id="dateDisplay" aria-live="polite" class="data-display"></div>
+                </header>
+                
+                <div class="module-separator"></div>
+
+                <section class="control-group core-params" aria-label="Core Simulation Parameters">
+                    <h2 class="module-header sub-title">  SYSTEM PARAMETERS</h2>
+                    
+                    <div class="param-unit">
+                        <label id="scenarioLabel" for="scenarioCont">
+                            <div class="label-text">Scenario </div>
+                            <div id="scenarioCont" class="inputContainer"></div>
+                        </label>
+                    </div>
+                    
+                    <div class="param-unit">
+                        <label id="dateLabel" for="dateCont">
+                            <div class="label-text">Ephemeris Date </div>
+                            <div id="dateCont" class="inputContainer"></div>
+                        </label>
+                    </div>
+                    
+                    <div class="param-unit last-param">
+                        <label id="deltaTLabel" for="deltaTCont">
+                            <div class="label-text">Animation Speed </div>
+                            <div id="deltaTCont" class="inputContainer"></div>
+                        </label>
+                    </div>
+                </section>
+                
+                <div class="module-separator data-stream-separator"></div>
+
+                <section class="control-group viewport-controls" aria-label="Camera and Viewpoint Controls">
+                    <h2 class="module-header sub-title">VIEWPORT TELEMETRY</h2>
+
+                    <div class="param-unit">
+                        <label id="lookFromLabel" for="lookFromCont">
+                            <div class="label-text">Origin/POV </div>
+                            <div id="lookFromCont" class="inputContainer"></div>
+                        </label>
+                    </div>
+
+                    <div class="param-unit">
+                        <label id="lookAtLabel" for="lookAtCont">
+                            <div class="label-text">Target Lock </div>
+                            <div id="lookAtCont" class="inputContainer"></div>
+                        </label>
+                    </div>
+                    
+                    <div class="param-unit last-param">
+                        <label id="planetScaleLabel" for="planetScaleCont">
+                            <div class="label-text">Planet Scale </div>
+                            <div id="planetScaleCont" class="inputContainer"></div>
+                        </label>
+                    </div>
+                </section>
+
+
+                <section class="control-group viewport-controls">
+                    <h2 class="module-header sub-title">Planet Info</h2>
+
+                    <div class="param-unit">
+                        <label id="planetInfoSelectLabel" for="planetInfoSelectCont">
+                            <div class="label-text">Planet Selector</div>
+                            <div id="planetInfoSelectCont" class="inputContainer"></div>
+                        </label>
+                    </div>
+
+                    <div class="param-unit">
+                        <label id="planetInfoInfoLabel" for="planetInfoInfoCont">
+                            <!-- <div class="label-text">Details:</div> -->
+                            <div id="planetInfoInfoCont" class="inputContainer"></div>
+                        </label>
+                    </div>
+                </section>
+
+
+
+                <div id="navCollapse" class="fa fa-angle-double-up" role="button" aria-expanded="true" aria-controls="gui"></div>
+            </div>
+        </nav>
+        
+        <div class="preload" role="status" aria-label="Loading Simulation">
+            <div class="orbit"><div class="planet"></div></div>
+            <div class="title">
+                <h1>CosmoTrail</h1>
+                <h2>solar system</h2>
+            </div>
+        </div>
+
+        <script src="assets/data/elp.js"></script>
+        <script src="assets/data/vsop-earth.js"></script>
+        <script>
+            window.onCosmoTrailLoaded = function(CosmoTrail){
+                const cosmoTrail = new CosmoTrail('cosmoTrail');
+                cosmoTrail.loadDefaultScenario();
+            }
+        </script>
+    </body>
+</html>
